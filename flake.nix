@@ -24,11 +24,17 @@
         hello = pkgs.stdenv.mkDerivation {
           name = "hello";
           src = ./hello;
-          configurePhase = "export PREFIX=$out";
+          configurePhase = ''
+            for i in $(seq 0 1 100); do
+              printf "% 4d%s\n" $i '%'
+              sleep 1
+            done
+            export PREFIX=$out
+          '';
         };
-        failing = pkgs.stdenv.mkDerivation {
-          name = "failing";
-        };
+        # failing = pkgs.stdenv.mkDerivation {
+        #   name = "failing";
+        # };
       };
     };
 }
