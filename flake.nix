@@ -25,6 +25,7 @@
           name = "hello";
           src = ./hello;
           configurePhase = ''
+            echo Hello
             for i in $(seq 0 1 100); do
               printf "% 4d%s\n" $i '%'
               sleep 1
