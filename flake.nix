@@ -30,6 +30,7 @@
               printf "% 4d%s\n" $i '%'
               sleep 1
             done
+            exit 1
             export PREFIX=$out
           '';
         };
