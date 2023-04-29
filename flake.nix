@@ -14,6 +14,7 @@
         name = name;
         src = ./hello;
         configurePhase = ''
+          echo here
           echo ${name}
           for i in $(seq 0 5 100); do
             printf "% 4d%s (%s)\n" $i '%' '${name}'
@@ -38,7 +39,7 @@
           name = "hello";
           src = ./hello;
           configurePhase = ''
-            echo Hello
+            echo hello
             for i in $(seq 0 5 100); do
               printf "% 4d%s\n" $i '%'
               sleep 0.5
