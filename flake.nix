@@ -1,3 +1,4 @@
+
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -9,6 +10,18 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
       libTyphon = typhon.actions.${system};
+      job = name: pkgs.stdenv.mkDerivation {
+        name = name;
+        src = ./hello;
+        configurePhase = ''
+          echo ${name}
+          for i in $(seq 0 5 100); do
+            printf "% 4d%s (%s)\n" $i '%' '${name}'
+            sleep 0.4
+          done
+          export PREFIX=$out
+        '';
+      };
     in {
       typhonProject = libTyphon.mkProject {
         meta = {
@@ -33,6 +46,10 @@
             exit 1
             export PREFIX=$out
           '';
+          buildInputs = [
+            (job "sub-a")
+            (job "sub-b")
+          ];
         };
         # failing = pkgs.stdenv.mkDerivation {
         #   name = "failing";
