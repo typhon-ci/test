@@ -26,9 +26,14 @@
           src = ./hello;
           configurePhase = "export PREFIX=$out";
         };
-        failing = pkgs.stdenv.mkDerivation {
-          name = "failing";
-        };
+        failing = pkgs.stdenv.mkDerivation { name = "failing"; };
+        dist = (pkgs.writeTextFile {
+          name = "index";
+          destination = "/index.html";
+          text = ''
+            Hello world!
+          '';
+        }).overrideAttrs (_: _: { passthru.typhonDist = true; });
       };
     };
 }
